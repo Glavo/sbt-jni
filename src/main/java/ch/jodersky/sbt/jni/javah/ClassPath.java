@@ -1,11 +1,9 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import static org.glavo.javah.Utils.*;
 
 public class ClassPath implements SearchPath {
     private final Path path;
@@ -15,14 +13,14 @@ public class ClassPath implements SearchPath {
         Objects.requireNonNull(path);
         this.path = path.toAbsolutePath();
 
-        Path root = classPathRoot(path);
-        roots = root == null ? Collections.emptyList() : SearchPath.multiReleaseRoots(root);
+        Path root = Utils.classPathRoot(path);
+        roots = root == null ? Collections.emptyList() : multiReleaseRoots(root);
     }
 
     @Override
     public Path search(ClassName name) {
         Objects.requireNonNull(name);
-        return SearchPath.searchFromRoots(roots, name);
+        return searchFromRoots(roots, name);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import java.io.PrintWriter;
 import java.io.Writer;

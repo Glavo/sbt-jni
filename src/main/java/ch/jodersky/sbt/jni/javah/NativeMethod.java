@@ -1,12 +1,10 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
-
-import static org.glavo.javah.Utils.*;
 
 public final class NativeMethod {
     private final int access;
@@ -32,10 +30,10 @@ public final class NativeMethod {
     public static NativeMethod of(int access, String name, Type type) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(type);
-        if (!METHOD_NAME_PATTERN.matcher(name).matches()) {
+        if (!Utils.METHOD_NAME_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format("\"%s\" is not a qualified method name", name));
         }
-        Matcher m = METHOD_TYPE_PATTERN.matcher(type.toString());
+        Matcher m = Utils.METHOD_TYPE_PATTERN.matcher(type.toString());
         if (!m.matches()) {
             throw new IllegalArgumentException(String.format("\"%s\" is not a method type", type));
         }
@@ -46,8 +44,8 @@ public final class NativeMethod {
         this.access = access;
         this.name = name;
         this.type = type;
-        this.mangledName = mangleName(name);
-        this.longMangledName = mangledName + "__" + mangleName(arguments);
+        this.mangledName = Utils.mangleName(name);
+        this.longMangledName = mangledName + "__" + Utils.mangleName(arguments);
     }
 
     @Override

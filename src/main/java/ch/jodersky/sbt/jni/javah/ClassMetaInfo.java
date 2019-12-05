@@ -1,4 +1,4 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import org.objectweb.asm.*;
 

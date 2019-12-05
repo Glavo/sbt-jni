@@ -1,10 +1,8 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import static org.glavo.javah.Utils.*;
 
 public final class Constant {
     private static final List<Class<?>> TYPES = Arrays.asList(
@@ -22,7 +20,7 @@ public final class Constant {
         if (!TYPES.contains(value.getClass())) {
             throw new IllegalArgumentException();
         }
-        if (!SIMPLE_NAME_PATTERN.matcher(name).matches()) {
+        if (!Utils.SIMPLE_NAME_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format("\"%s\" is not a qualified constant name", name));
         }
 
@@ -32,7 +30,7 @@ public final class Constant {
     private Constant(String name, Object value) {
         this.name = name;
         this.value = value;
-        this.mangledName = mangleName(name);
+        this.mangledName = Utils.mangleName(name);
     }
 
     @Override

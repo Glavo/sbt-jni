@@ -1,4 +1,4 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.jar.Manifest;
 import java.util.stream.Collectors;
-
-import static org.glavo.javah.Utils.*;
 
 public interface SearchPath {
     Path search(ClassName name);
@@ -78,7 +76,7 @@ public interface SearchPath {
                     List<Path> list = Files.list(base)
                             .map(Path::toAbsolutePath)
                             .filter(Files::isDirectory)
-                            .filter(p -> MULTI_RELEASE_VERSIONS.contains(p.getFileName().toString()))
+                            .filter(p -> Utils.MULTI_RELEASE_VERSIONS.contains(p.getFileName().toString()))
                             .sorted(Comparator.comparing((Path p) -> Integer.parseInt(p.getFileName().toString())).reversed())
                             .collect(Collectors.toCollection(LinkedList::new));
                     list.add(root);

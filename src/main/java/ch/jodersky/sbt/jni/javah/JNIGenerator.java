@@ -1,4 +1,4 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Type;
@@ -7,8 +7,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-
-import static org.glavo.javah.Utils.*;
 
 public class JNIGenerator {
 
@@ -31,7 +29,7 @@ public class JNIGenerator {
             searchPaths = Collections.singleton(RuntimeSearchPath.INSTANCE);
         }
         if (errorHandle == null) {
-            errorHandle = NOOP_WRITER;
+            errorHandle = Utils.NOOP_WRITER;
         }
 
         this.errorHandle = errorHandle;
@@ -119,7 +117,7 @@ public class JNIGenerator {
             out.println("/*");
             out.println(" * Class:      " + name.mangledName());
             out.println(" * Method:     " + method.mangledName());
-            out.println(" * Signature:  " + escape(method.type().toString()));
+            out.println(" * Signature:  " + Utils.escape(method.type().toString()));
             out.println(" */");
             out.println("JNIEXPORT " + ret + " JNICALL " + methodName);
             out.println("  (" + String.join(", ", args) + ");");
@@ -204,7 +202,7 @@ public class JNIGenerator {
 
     private String[] mapArgsTypeToNative(Type methodType) {
         Objects.requireNonNull(methodType);
-        if (!METHOD_TYPE_PATTERN.matcher(methodType.toString()).matches()) {
+        if (!Utils.METHOD_TYPE_PATTERN.matcher(methodType.toString()).matches()) {
             throw new IllegalArgumentException(methodType + " is not a method type");
         }
         Type[] args = methodType.getArgumentTypes();
@@ -229,7 +227,7 @@ public class JNIGenerator {
         }
 
         try (InputStream in = Files.newInputStream(search(name))) {
-            return isThrowable(superClassOf(new ClassReader(in)));
+            return isThrowable(Utils.superClassOf(new ClassReader(in)));
         } catch (Exception ignored) {
             errorHandle.println("warning: class " + name + " not found");
             return false;

@@ -1,8 +1,6 @@
-package org.glavo.javah;
+package ch.jodersky.sbt.jni.javah;
 
 import java.util.Objects;
-
-import static org.glavo.javah.Utils.*;
 
 public final class ClassName {
     private final String moduleName;
@@ -13,10 +11,10 @@ public final class ClassName {
     public static ClassName of(String moduleName, String className) {
         Objects.requireNonNull(className, "Class name is null");
 
-        if (moduleName != null && !FULL_NAME_PATTERN.matcher(moduleName).matches()) {
+        if (moduleName != null && !Utils.FULL_NAME_PATTERN.matcher(moduleName).matches()) {
             throw new IllegalArgumentException("Illegal module name: " + moduleName);
         }
-        if (!FULL_NAME_PATTERN.matcher(className).matches()) {
+        if (!Utils.FULL_NAME_PATTERN.matcher(className).matches()) {
             throw new IllegalArgumentException("Illegal class name: " + moduleName);
         }
 
@@ -37,7 +35,7 @@ public final class ClassName {
         this.moduleName = moduleName;
         this.className = className;
         this.simpleName = className.substring(className.lastIndexOf('.') + 1);
-        this.mangledName = mangleName(className);
+        this.mangledName = Utils.mangleName(className);
     }
 
     @Override
